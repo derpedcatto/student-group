@@ -5,16 +5,19 @@ using namespace std;
 
 int main()
 {
-	Student a1("a", "b", "c");
-	Student b2("1", "2", "3");
+	srand(time(NULL));
+	Group a(1);
+	Group b(2);
 
-	a1.ShowStudent();
-	b2.ShowStudent();
-
-	a1.CopyStudentDataFrom(b2);
-
-	cout << "sssssssssssssssssssssssssssssssssssssssssssssssss\n";
-	cout << "sssssssssssssssssssssssssssssssssssssssssssssssss\n";
-
-	a1.ShowStudent();
+	a.ShowGroup();
+	
+	cout << "bbbbbbbbbbbbbbb\n\n\n\n\n\n\n\n\n";
+	
+	b.ShowGroup();
+	
+	a.MergeGroups(b);
+	
+	cout << "\n\n\n\n\n\n\n\n\n";
+	
+	a.ShowGroup();
 }

@@ -58,7 +58,7 @@ public:
 	/*Методы*/
 	void ShowStudent() const;
 	void ChangeRatingElement(int arr_type, int index, int value);
-	void CopyStudentDataFrom(Student src);
+	void CopyStudentDataFrom(const Student& tmp);
 
 	/*Деструктор*/
 	~Student();

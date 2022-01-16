@@ -54,19 +54,19 @@ void Student::ChangeRatingElement(int arr_type, int index, int value)
 	}
 }
 
-void Student::CopyStudentDataFrom(Student src)
+void Student::CopyStudentDataFrom(const Student& src)
 {
 	SetFullName(src.GetName(), src.GetLastName(), src.GetMiddleName());
 	SetDate(src.GetYear(), src.GetMonth(), src.GetDay());
 	SetAddress(src.GetAddress());
 	SetPhoneNum(src.GetPhoneNum());
-
+	
 	for (int i = 0; i < pass_size; i++)
 		SetPassElement(i, src.GetPassElement(i));
-
+	
 	for (int i = 0; i < course_size; i++)
 		SetCourseElement(i, src.GetCourseElement(i));
-
+	
 	for (int i = 0; i < exam_size; i++)
 		SetExamElement(i, src.GetExamElement(i));
 }

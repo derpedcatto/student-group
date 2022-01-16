@@ -16,6 +16,45 @@ void Group::ShowGroup() const
 	}
 }
 
+void Group::AddStudent()
+{
+	group_size++;
+
+	Student* tmp = new Student[group_size];
+	
+	for (int i = 0; i < group_size - 1; i++)
+	{
+		tmp[i].CopyStudentDataFrom(group[i]);
+	}
+	
+	delete[] group;
+	
+	group = tmp;
+}	
+
+void Group::MergeGroups(Group& tmp)
+{
+	int count = 0;
+	Student* newgroup = new Student[group_size + tmp.GetGroupSize()];
+
+	for (int i = 0; i < group_size; i++)
+	{
+		newgroup[count].CopyStudentDataFrom(group[i]);
+		count++;
+	}
+
+	for (int i = 0; i < tmp.GetGroupSize(); i++)
+	{
+		newgroup[count].CopyStudentDataFrom(tmp.group[i]);
+		count++;
+	}
+
+	group_size = count;
+
+	delete[] group;
+	group = newgroup;
+}
+
 void Group::ChangeInfo()
 {
 	int choice;
@@ -65,6 +104,7 @@ Group::~Group()
 }
 
 /*Сеттеры*/
+//Удалить?
 void Group::SetGroupSize(unsigned int group_size)
 {
 	this->group_size = group_size;
