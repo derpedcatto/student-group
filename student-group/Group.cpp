@@ -32,6 +32,48 @@ void Group::AddStudent()
 	group = tmp;
 }	
 
+void Group::TransferStudent(Group& dest) //destination
+{
+	int choice;
+	do
+	{
+		printf("Enter student number(1-%d): ", group_size);
+		cin >> choice;
+
+	} while (choice < 1 || choice > group_size);
+
+	choice--;	//для обращения с массивом
+
+	/*Копирование студента в группу-получатель*/
+	dest.group_size++;
+	Student* receiver = new Student[dest.group_size];
+	for (int i = 0; i < dest.group_size - 1; i++)
+	{
+		receiver[i].CopyStudentDataFrom(dest.group[i]);
+	}
+
+	receiver[dest.group_size - 1].CopyStudentDataFrom(group[choice]);
+
+	delete[] dest.group;
+	dest.group = receiver;
+
+	/*Удаление студента из группы-отправителя*/
+	group_size--;
+	Student* sender = new Student[group_size];
+
+	for (int i = 0; i < choice; i++)
+	{
+		sender[i].CopyStudentDataFrom(group[i]);
+	}
+	for (int i = choice; i < group_size; i++)
+	{
+		sender[i].CopyStudentDataFrom(group[i + 1]);
+	}
+
+	delete[] group;
+	group = sender;
+}
+
 void Group::MergeGroups(Group& tmp)
 {
 	int count = 0;
