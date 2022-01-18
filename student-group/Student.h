@@ -27,11 +27,32 @@ private:
 
 public:
 	/*Конструкторы*/
-	Student() : Student("Alexander", "Vannovskiy", "Alexandrovich", 27, 12, 2002, "Chornomorskaya 46", "380980461387") {}
+	Student()
+	{
+        const char* rand_names[10] = { "Alexander", "Vladimir", "Alexei", "Leonid", "Nikita", "Dmitriy", "Ivan", "Lev", "Andrei", "Pasha" };
+        const char* rand_lastnames[10] = { "Vannovskiy", "Azarov", "Afanasyev", "Belov", "Bunin", "Volkov", "Voloshin", "Golov", "Dyogtev", "Dyomin" };
+        const char* rand_middlenames[10] = { "Alexandrovich", "Ivanovich", "Petrovich", "Andreevich", "Timurovich", "Vasilyevich", "Vladimirovich", "Yaroslavich", "Timurovich", "Nikolaevich" };
+
+		SetFullName(rand_names[rand() % 10], rand_lastnames[rand() % 10], rand_middlenames[rand() % 10]);
+		SetDate(1970 + rand() % 33, 1 + rand() % 11, 1 + rand() % 30);
+		SetAddress("Chornomorskaya 46");
+		SetPhoneNum("380980461387");
+
+		pass = new int[pass_size];
+		course = new int[course_size];
+		exam = new int[exam_size];
+		
+		for (int i = 0; i < pass_size; i++)
+			pass[i] = 3 + rand() % 9;
+		for (int i = 0; i < course_size; i++)
+			course[i] = 3 + rand() % 9;
+		for (int i = 0; i < exam_size; i++)
+			exam[i] = 3 + rand() % 9;
+	}
 
 	Student(const char* name, const char* lastname, const char* middlename)
-		: Student(name, lastname, middlename, 27, 12, 2002, "Chornomorskaya 46", "380980461387") { }
-
+		: Student(name, lastname, middlename, 1970 + rand() % 33, 1 + rand() % 11, 1 + rand() % 30, "Chornomorskaya 46", "380980461387") { }
+	
 	Student(const char* name, const char* lastname, const char* middlename, int year, int month, int day)
 		: Student(name, lastname, middlename, year, month, day, "Chornomorskaya 46", "380980461387") { }
 

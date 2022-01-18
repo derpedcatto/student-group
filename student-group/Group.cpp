@@ -2,7 +2,6 @@
 #include <iostream>
 using namespace std;
 
-/*Добавить алфавитный перебор*/
 void Group::ShowGroup() const
 {
 	cout << "Group name: " << group_name << endl;
@@ -296,7 +295,6 @@ Group::~Group()
 }
 
 /*Сеттеры*/
-//Удалить?
 void Group::SetGroupSize(unsigned int group_size)
 {
 	this->group_size = group_size;

@@ -12,9 +12,15 @@ private:
 
 public:
 	/*Конструкторы*/
-	Group() : Group("SPU121", "Programming", 15, 1) { }
+	Group()
+	{
+		SetGroupName("SPU121");
+		SetGroupSpec("Programming");
+		SetGroupSize(10);
+		SetGroupNum(1);
+	}
 
-	Group(unsigned int group_size) : Group("SPU121", "Programming", group_size, 0) { }
+	Group(unsigned int group_size) : Group("SPU121", "Programming", group_size, 1) { }
 
 	Group(const Group& tmp)
 	{
@@ -89,7 +95,7 @@ public:
 (создаётся точная копия группы).
 
 Реализовать следующие методы:
-+ Показ всех студентов группы
++- Показ всех студентов группы
 (сначала - название и специализация группы,
 затем - порядковые номера, фамилии в алфавитном порядке
 и имена студентов).
