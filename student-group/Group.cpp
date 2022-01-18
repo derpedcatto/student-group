@@ -28,7 +28,6 @@ void Group::AddStudent()
 	}
 	
 	delete[] group;
-	
 	group = tmp;
 }	
 
@@ -72,6 +71,157 @@ void Group::TransferStudent(Group& dest) //destination
 
 	delete[] group;
 	group = sender;
+}
+
+void Group::ExpellBadStudents()
+{
+	bool copyStudents = true;
+	int min_mark = 4;
+	int exp_count = 0;
+
+	/*индексация неуспевающих студентов*/
+	/*0 - ОК, 1 - Отчисление*/
+	int* expell = new int[group_size];
+	for (int i = 0; i < group_size; i++)
+	{
+		expell[i] = 0;
+	}
+
+	for (int i = 0; i < group_size; i++)
+	{
+		bool Expell = false;
+		for (int j = 0; j < group[i].GetPassSize(); j++)
+		{
+			if (group[i].GetPassElement(j) < min_mark)
+			{
+				Expell = true;
+				exp_count++;
+				expell[i] = 1;
+				break;
+			}
+		}
+
+		if (Expell)
+			continue;
+
+		for (int j = 0; j < group[i].GetCourseSize(); j++)
+		{
+			if (group[i].GetCourseElement(j) < min_mark)
+			{
+				Expell = true;
+				exp_count++;
+				expell[i] = 1;
+				break;
+			}
+		}
+
+		if (Expell)
+			continue;
+
+		for (int j = 0; j < group[i].GetExamSize(); j++)
+		{
+			if (group[i].GetExamElement(j) < min_mark)
+			{
+				Expell = true;
+				exp_count++;
+				expell[i] = 1;
+				break;
+			}
+		}
+	}
+
+	/*Если все студенты отчислены*/
+	if (exp_count == group_size)
+	{
+		cout << "All students are expelled! Adding one student to group...";
+		group_size = 1;
+		copyStudents = false;
+	}
+	else
+	{
+		group_size -= exp_count;
+	}
+
+	Student* newgroup = new Student[group_size];
+
+	int count = 0;
+	if (copyStudents)
+	{
+		for (int i = 0; i < group_size + exp_count; i++)
+		{
+			if (expell[i] == 0)
+			{
+				newgroup[count].CopyStudentDataFrom(group[i]);
+				count++;
+			}
+		}
+	}
+
+	delete[] expell;
+	delete[] group;
+	group = newgroup;
+}
+
+void Group::ExpellWorstStudent()
+{
+	double* expell = new double[group_size];
+
+	for (int i = 0; i < group_size; i++)
+	{
+		double markPass = 0;
+		double markCourse = 0;
+		double markExam = 0;
+
+		for (int j = 0; j < group[i].GetPassSize(); j++)
+		{
+			markPass += group[i].GetPassElement(j);
+		}
+		for (int j = 0; j < group[i].GetCourseSize(); j++)
+		{
+			markCourse += group[i].GetCourseElement(j);
+		}
+		for (int j = 0; j < group[i].GetExamSize(); j++)
+		{
+			markExam += group[i].GetExamElement(j);
+		}
+
+		markPass /= group[i].GetPassSize();
+		markCourse /= group[i].GetCourseSize();
+		markExam /= group[i].GetExamSize();
+
+		expell[i] = (markPass + markCourse + markExam) / 3;
+
+		printf("Student %d average: %0.1f\n", i + 1, expell[i]);
+	}
+
+	int lowest = 0;
+	for (int i = 0; i < group_size - 1; i++)
+	{
+		if (expell[lowest] > expell[i + 1])
+		{
+			lowest = i + 1;
+		}
+	}
+
+	cout << "\n\nLowest: " << lowest + 1;
+
+	/*Создание новой группы*/
+	group_size--;
+	Student* newgroup = new Student[group_size];
+
+	cout << "\n\n\n\n\n\n";
+	for (int i = 0; i < lowest; i++)
+	{
+		newgroup[i].CopyStudentDataFrom(group[i]);
+	}
+	for (int i = lowest; i < group_size; i++)
+	{
+		newgroup[i].CopyStudentDataFrom(group[i + 1]);
+	}
+
+	delete[] expell;
+	delete[] group;
+	group = newgroup;
 }
 
 void Group::MergeGroups(Group& tmp)

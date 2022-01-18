@@ -6,7 +6,10 @@ using namespace std;
 int main()
 {
 	srand(time(NULL));
-	Group a(5);
+	Group a(4);
 
+	a.ShowGroup();
+	a.ExpellWorstStudent();
+	cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 	a.ShowGroup();
 }

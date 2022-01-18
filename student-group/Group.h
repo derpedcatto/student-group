@@ -50,6 +50,8 @@ public:
 	void ShowGroup() const;
 	void AddStudent();
 	void TransferStudent(Group& dest);
+	void ExpellBadStudents();
+	void ExpellWorstStudent();
 	void MergeGroups(Group& tmp);
 	void ChangeInfo();
 
@@ -95,6 +97,6 @@ public:
 - Редактирования данных о группе,								+
 - Слияния двух групп,											+
 - Перевода студента из одной группы в другую,					+
-- Отчисления всех не сдавших (один любой) экзамен студентов,	-
+- Отчисления всех не сдавших (один любой) экзамен студентов,	+
 - Отчисления одного самого неуспевающего студента.				-
 */

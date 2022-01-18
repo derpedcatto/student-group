@@ -27,7 +27,7 @@ private:
 
 public:
 	/*Конструкторы*/
-	Student() : Student("Alexander", "Vannovskiy", "Alexandrovich", 27, 12, 2002, "Chornomorskaya 46", "380980461387") { }
+	Student() : Student("Alexander", "Vannovskiy", "Alexandrovich", 27, 12, 2002, "Chornomorskaya 46", "380980461387") {}
 
 	Student(const char* name, const char* lastname, const char* middlename)
 		: Student(name, lastname, middlename, 27, 12, 2002, "Chornomorskaya 46", "380980461387") { }
@@ -48,11 +48,11 @@ public:
 		exam = new int[exam_size];
 
 		for (int i = 0; i < pass_size; i++)
-			pass[i] = 1 + rand() % 11;
+			pass[i] = 3 + rand() % 9;
 		for (int i = 0; i < course_size; i++)
-			course[i] = 1 + rand() % 11;
+			course[i] = 3 + rand() % 9;
 		for (int i = 0; i < exam_size; i++)
-			exam[i] = 1 + rand() % 11;
+			exam[i] = 3 + rand() % 9;
 	}
 
 	/*Методы*/
