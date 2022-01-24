@@ -294,6 +294,79 @@ Group::~Group()
 	if (group != nullptr) delete[] group;
 }
 
+/*Операторы перегрузки*/
+Group& Group::operator+=(const Student& newstudent)
+{
+	AddStudent();
+	group[group_size - 1].CopyStudentDataFrom(newstudent);
+	return *this;
+}
+bool Group::operator>(const Group& other)
+{
+	if (group_size > other.group_size)
+		return true;
+	else
+		return false;
+}
+bool Group::operator<(Group& other)
+{
+	return other > *this;
+}
+bool Group::operator==(const Group& other)
+{
+	if (group_size == other.group_size)
+		return true;
+	else
+		return false;
+}
+bool Group::operator!=(const Group& other)
+{
+	return !(*this == other);
+}
+Group& Group::operator=(const Group& other)
+{
+	delete[] group;
+	SetGroupName(other.group_name);
+	SetGroupSpec(other.group_spec);
+
+	group_size = other.group_size;
+	group_num = other.group_num;
+
+	group = new Student[group_size];
+	for (int i = 0; i < group_size; i++)
+	{
+		group[i].CopyStudentDataFrom(other.group[i]);
+	}
+
+	return *this;
+}
+
+ostream& operator<<(ostream& output, const Group& src)
+{
+	src.ShowGroup();
+	return output;
+}
+
+/*
+Time& Time::operator() (int h, int m, int s)
+{
+	SetHours(h);
+	SetMinutes(m);
+	SetSeconds(s);
+	return *this;
+}
+istream& operator>>(istream& input, Time& src)
+{
+	int hh, mm, ss;
+	input >> hh >> mm >> ss;
+
+	src.SetHours(hh);
+	src.SetMinutes(mm);
+	src.SetSeconds(ss);
+
+	return input;
+}*/
+
 /*Сеттеры*/
 void Group::SetGroupSize(unsigned int group_size)
 {
@@ -301,11 +374,13 @@ void Group::SetGroupSize(unsigned int group_size)
 }
 void Group::SetGroupName(const char* group_name)
 {
+	delete[] this->group_name;
 	this->group_name = new char[100];
 	strcpy_s(this->group_name, 99, group_name);
 }
 void Group::SetGroupSpec(const char* group_spec)
 {
+	delete[] this->group_spec;
 	this->group_spec = new char[100];
 	strcpy_s(this->group_spec, 99, group_spec);
 }

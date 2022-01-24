@@ -6,5 +6,6 @@ using namespace std;
 int main()
 {
 	srand(time(NULL));
-	Group a(3);
+	Student a;
+
 }

@@ -71,6 +71,22 @@ void Student::CopyStudentDataFrom(const Student& src)
 		SetExamElement(i, src.GetExamElement(i));
 }
 
+double Student::GetGPA()
+{
+	double GPA = 0;
+
+	for (int i = 0; i < pass_size; i++)
+		GPA += pass[i];
+
+	for (int i = 0; i < course_size; i++)
+		GPA += course[i];
+
+	for (int i = 0; i < exam_size; i++)
+		GPA += exam[i];
+
+	return GPA /= (pass_size + course_size + exam_size);
+}
+
 /*Деструктор*/
 Student::~Student()
 {
@@ -82,6 +98,46 @@ Student::~Student()
 	if (exam != nullptr) delete[] exam;
 	if (address != nullptr) delete[] address;
 	if (phonenum != nullptr) delete[] phonenum;
+}
+
+/*Операторы перегрузки*/
+bool Student::operator>(Student& other)
+{
+	if (GetGPA() > other.GetGPA())
+		return true;
+	else
+		return false;
+}
+bool Student::operator<(Student& other)
+{
+	return other > *this;
+}
+bool Student::operator==(Student& other)
+{
+	if (GetGPA() == other.GetGPA())
+		return true;
+	else
+		return false;
+}
+bool Student::operator!=(Student& other)
+{
+	return !(*this == other);
+}
+Student& Student::operator+=(int mark)
+{
+	pass_size++;
+	int* newpass = new int[pass_size];
+
+	for (int i = 0; i < pass_size - 1; i++)
+	{
+		newpass[i] = pass[i];
+	}
+	newpass[pass_size - 1] = mark;
+
+	delete[] pass;
+	pass = newpass;
+
+	return *this;
 }
 
 /*Сеттеры*/

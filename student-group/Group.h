@@ -61,6 +61,20 @@ public:
 	void MergeGroups(Group& tmp);
 	void ChangeInfo();
 
+	/*Операторы перегрузки*/
+	Group& operator+=(const Student& newstudent);
+	bool operator>(const Group& other);
+	bool operator<(Group& other);
+	bool operator==(const Group& other);
+	bool operator!=(const Group& other);
+	Group& operator=(const Group& other);
+	friend ostream& operator<<(ostream& output, const Group& src);
+
+	/*
+	Time& operator() (int h, int m, int s);
+	friend istream& operator>>(istream& input, Time& src);
+	*/
+
 	/*SET-GET*/	
 	void SetGroupSize(unsigned int group_size);
 	void SetGroupName(const char* group_name);
@@ -105,4 +119,19 @@ public:
 + Перевода студента из одной группы в другую,
 + Отчисления всех не сдавших (один любой) экзамен студентов,
 + Отчисления одного самого неуспевающего студента.
+*/
+
+/*
++ «+=» Student
++ «>»
++ «<» 
++ «==» 
++ «!=»
+- «>>»
++ «<<»
+- «( )»
++ «=»
+- «[ ]» (возврат студента по индексу)
+- предусмотреть конструктор преобразования из типа Student*
+- перегрузить операцию преобразования типа из Group в Student*.
 */

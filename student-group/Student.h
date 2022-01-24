@@ -80,9 +80,17 @@ public:
 	void ShowStudent() const;
 	void ChangeRatingElement(int arr_type, int index, int value);
 	void CopyStudentDataFrom(const Student& tmp);
+	double GetGPA();
 
 	/*Деструктор*/
 	~Student();
+
+	/*Операторы перегрузки*/
+	bool operator>(Student& other);
+	bool operator<(Student& other);
+	bool operator==(Student& other);
+	bool operator!=(Student& other);
+	Student& operator+=(int mark);
 
 	/*Сеттеры*/
 	void SetFullName(const char* name, const char* lastname, const char* middlename);
@@ -134,4 +142,17 @@ public:
 2 - 3 версии конструктора с параметрами,
 геттеры и сеттеры для всех полей,
 показ всех данных о студенте.
+*/
+
+/*
++ «+=» int добавление оценки
+Сравнение студентов по среднему баллу
++ «>»
++ «<»
++ «==»
++ «!=»
+- «>>»
+- «<<»
+- «( )»
+- «=»
 */
