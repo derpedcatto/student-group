@@ -1,5 +1,10 @@
 #include "Group.h"
 
+/*???*/
+// AddStudent
+// Operator Student* ()
+
+
 void Group::ShowGroup() const
 {
 	cout << "Group name: " << group_name << endl;
@@ -15,17 +20,8 @@ void Group::ShowGroup() const
 
 void Group::AddStudent()
 {
-	group_size++;
-
-	Student* tmp = new Student[group_size];
-	
-	for (int i = 0; i < group_size - 1; i++)
-	{
-		tmp[i].CopyStudentDataFrom(group[i]);
-	}
-	
-	delete[] group;
-	group = tmp;
+	Student tmp;
+	group.push_back(tmp);
 }	
 
 void Group::TransferStudent(Group& dest) //destination
@@ -40,34 +36,8 @@ void Group::TransferStudent(Group& dest) //destination
 
 	choice--;	//для обращения с массивом
 
-	/*Копирование студента в группу-получатель*/
-	dest.group_size++;
-	Student* receiver = new Student[dest.group_size];
-	for (int i = 0; i < dest.group_size - 1; i++)
-	{
-		receiver[i].CopyStudentDataFrom(dest.group[i]);
-	}
-
-	receiver[dest.group_size - 1].CopyStudentDataFrom(group[choice]);
-
-	delete[] dest.group;
-	dest.group = receiver;
-
-	/*Удаление студента из группы-отправителя*/
-	group_size--;
-	Student* sender = new Student[group_size];
-
-	for (int i = 0; i < choice; i++)
-	{
-		sender[i].CopyStudentDataFrom(group[i]);
-	}
-	for (int i = choice; i < group_size; i++)
-	{
-		sender[i].CopyStudentDataFrom(group[i + 1]);
-	}
-
-	delete[] group;
-	group = sender;
+	group.push_back(dest.group[choice]);
+	dest.group.pop_back();
 }
 
 void Group::ExpellBadStudents()
@@ -126,20 +96,20 @@ void Group::ExpellBadStudents()
 			}
 		}
 	}
-
-	/*Если все студенты отчислены*/
-	if (exp_count == group_size)
-	{
-		cout << "All students are expelled! Adding one student to group...";
-		group_size = 1;
-		copyStudents = false;
-	}
-	else
+  
+  	/*Если все студенты отчислены*/
+  	if (exp_count == group_size)
+  {
+  	cout << "All students are expelled! Adding one student to group...";
+  	group_size = 1;
+  	Student tmp;
+  	group.clear();
+  	group.push_back(tmp);
+  }
+  	else
 	{
 		group_size -= exp_count;
 	}
-
-	Student* newgroup = new Student[group_size];
 
 	int count = 0;
 	if (copyStudents)
@@ -148,15 +118,11 @@ void Group::ExpellBadStudents()
 		{
 			if (expell[i] == 0)
 			{
-				newgroup[count].CopyStudentDataFrom(group[i]);
+				group[count].CopyStudentDataFrom(group[i]);
 				count++;
 			}
 		}
 	}
-
-	delete[] expell;
-	delete[] group;
-	group = newgroup;
 }
 
 void Group::ExpellWorstStudent()
@@ -191,8 +157,8 @@ void Group::ExpellWorstStudent()
 		printf("Student %d average: %0.1f\n", i + 1, expell[i]);
 	}
 
-	int lowest = 0;
-	for (int i = 0; i < group_size - 1; i++)
+		int lowest = 0;
+		for (int i = 0; i < group_size - 1; i++)
 	{
 		if (expell[lowest] > expell[i + 1])
 		{
@@ -202,46 +168,22 @@ void Group::ExpellWorstStudent()
 
 	cout << "\n\nLowest: " << lowest + 1;
 
-	/*Создание новой группы*/
-	group_size--;
-	Student* newgroup = new Student[group_size];
-
-	cout << "\n\n\n\n\n\n";
-	for (int i = 0; i < lowest; i++)
-	{
-		newgroup[i].CopyStudentDataFrom(group[i]);
-	}
-	for (int i = lowest; i < group_size; i++)
-	{
-		newgroup[i].CopyStudentDataFrom(group[i + 1]);
-	}
-
-	delete[] expell;
-	delete[] group;
-	group = newgroup;
+	//group_size--;
+	//group.erase(group.begin() + lowest);
 }
 
 void Group::MergeGroups(Group& tmp)
 {
-	int count = 0;
-	Student* newgroup = new Student[group_size + tmp.GetGroupSize()];
+	group.resize(group_size + tmp.GetGroupSize());
 
-	for (int i = 0; i < group_size; i++)
-	{
-		newgroup[count].CopyStudentDataFrom(group[i]);
-		count++;
-	}
-
+	int count = group_size;
 	for (int i = 0; i < tmp.GetGroupSize(); i++)
 	{
-		newgroup[count].CopyStudentDataFrom(tmp.group[i]);
+		group[count].CopyStudentDataFrom(tmp.group[i]);
 		count++;
 	}
 
-	group_size = count;
-
-	delete[] group;
-	group = newgroup;
+	group_size += tmp.GetGroupSize();
 }
 
 void Group::ChangeInfo()
@@ -284,15 +226,16 @@ void Group::ChangeInfo()
 	}
 }
 
+
 /*Деструктор*/
 Group::~Group()
 {
 	if (group_name != nullptr) delete[] group_name;
 	if (group_spec != nullptr) delete[] group_spec;
-	if (group != nullptr) delete[] group;
 }
 
 /*Операторы перегрузки*/
+
 Group& Group::operator+=(const Student& newstudent)
 {
 	AddStudent();
@@ -323,19 +266,13 @@ bool Group::operator!=(const Group& other)
 }
 Group& Group::operator=(const Group& other)
 {
-	delete[] group;
 	SetGroupName(other.group_name);
 	SetGroupSpec(other.group_spec);
 
 	group_size = other.group_size;
 	group_num = other.group_num;
 
-	group = new Student[group_size];
-	for (int i = 0; i < group_size; i++)
-	{
-		group[i].CopyStudentDataFrom(other.group[i]);
-	}
-
+	group = other.group;
 	return *this;
 }
 
@@ -363,10 +300,11 @@ Group& Group::operator() (const char* name)
 	return *this;
 }
 
-Group::operator Student* ()
-{
-	return group;
-}
+
+//Group::operator Student* ()
+//{
+//	return group;
+//}
 
 /*Сеттеры*/
 void Group::SetGroupSize(unsigned int group_size)

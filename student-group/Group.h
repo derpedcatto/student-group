@@ -1,10 +1,11 @@
 #pragma once
 #include "Student.h"
 
+
 class Group
 {
 private:
-	Student* group;
+	vector<Student> group;
 	unsigned int group_size;
 	char* group_name;
 	char* group_spec;
@@ -18,7 +19,7 @@ public:
 		SetGroupSpec("Programming");
 		SetGroupSize(4);
 		SetGroupNum(1);
-		group = new Student[group_size];
+		group.resize(group_size);
 	}
 
 	Group(unsigned int group_size) : Group("SPU121", "Programming", group_size, 1) { }
@@ -33,7 +34,7 @@ public:
 		group_size = tmp.group_size;
 		group_num = tmp.group_num;
 
-		group = new Student[group_size];
+		group.resize(group_size);
 
 		for (int i = 0; i < group_size; i++)
 		{
@@ -41,14 +42,14 @@ public:
 		}
 	}
 
-	Group(Student* studentarray, int size)
-	{
-		SetGroupName("SPU121");
-		SetGroupSpec("Programming");
-		SetGroupSize(size);
-		SetGroupNum(1);
-		group = studentarray;
-	}
+	//Group(Student* studentarray, int size)
+	//{
+	//	SetGroupName("SPU121");
+	//	SetGroupSpec("Programming");
+	//	SetGroupSize(size);
+	//	SetGroupNum(1);
+	//	group = studentarray;
+	//}
 
 	Group(const char* group_name, const char* group_spec, unsigned int group_size, int group_num)
 	{
@@ -56,7 +57,7 @@ public:
 		SetGroupSpec(group_spec);
 		SetGroupSize(group_size);
 		SetGroupNum(group_num);
-		group = new Student[group_size];
+		group.resize(group_size);
 	}
 
 	/*Деструктор*/
@@ -81,7 +82,7 @@ public:
 	friend ostream& operator<<(ostream& output, const Group& src);
 	friend istream& operator>>(istream& input, Group& src);
 	Group& operator() (const char* name);
-	operator Student* ();
+	//operator Student* ();
 
 	/*SET-GET*/	
 	void SetGroupSize(unsigned int group_size);

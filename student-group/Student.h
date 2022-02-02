@@ -22,9 +22,9 @@ private:
 	int pass_size = 6;
 	int course_size = 5;
 	int exam_size = 4;
-	int* pass;
-	int* course;
-	int* exam;
+	vector<int> pass;
+	vector<int> course;
+	vector<int> exam;
 
 public:
 	/*Конструкторы*/
@@ -39,9 +39,9 @@ public:
 		SetAddress("Chornomorskaya 46");
 		SetPhoneNum("380980461387");
 
-		pass = new int[pass_size];
-		course = new int[course_size];
-		exam = new int[exam_size];
+		pass.resize(pass_size);
+		course.resize(course_size);
+		exam.resize(exam_size);
 		
 		for (int i = 0; i < pass_size; i++)
 			pass[i] = 3 + rand() % 9;
@@ -65,9 +65,9 @@ public:
 		SetAddress(address);
 		SetPhoneNum(phonenum);
 
-		pass = new int[pass_size];
-		course = new int[course_size];
-		exam = new int[exam_size];
+		pass.resize(pass_size);
+		course.resize(course_size);
+		exam.resize(exam_size);
 
 		for (int i = 0; i < pass_size; i++)
 			pass[i] = 3 + rand() % 9;

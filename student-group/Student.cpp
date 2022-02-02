@@ -93,9 +93,6 @@ Student::~Student()
 	if (name != nullptr) delete[] name;
 	if (lastname != nullptr) delete[] lastname;
 	if (middlename != nullptr) delete[] middlename;
-	if (pass != nullptr) delete[] pass;
-	if (course != nullptr) delete[] course;
-	if (exam != nullptr) delete[] exam;
 	if (address != nullptr) delete[] address;
 	if (phonenum != nullptr) delete[] phonenum;
 }
@@ -131,16 +128,7 @@ Student& Student::operator() (const char* name, const char* lastname, const char
 Student& Student::operator+=(int mark)
 {
 	pass_size++;
-	int* newpass = new int[pass_size];
-
-	for (int i = 0; i < pass_size - 1; i++)
-	{
-		newpass[i] = pass[i];
-	}
-	newpass[pass_size - 1] = mark;
-
-	delete[] pass;
-	pass = newpass;
+	pass.push_back(mark);
 
 	return *this;
 }
