@@ -16,8 +16,9 @@ public:
 	{
 		SetGroupName("SPU121");
 		SetGroupSpec("Programming");
-		SetGroupSize(10);
+		SetGroupSize(4);
 		SetGroupNum(1);
+		group = new Student[group_size];
 	}
 
 	Group(unsigned int group_size) : Group("SPU121", "Programming", group_size, 1) { }
@@ -38,6 +39,15 @@ public:
 		{
 			group[i].CopyStudentDataFrom(tmp.group[i]);
 		}
+	}
+
+	Group(Student* studentarray, int size)
+	{
+		SetGroupName("SPU121");
+		SetGroupSpec("Programming");
+		SetGroupSize(size);
+		SetGroupNum(1);
+		group = studentarray;
 	}
 
 	Group(const char* group_name, const char* group_spec, unsigned int group_size, int group_num)
@@ -69,11 +79,9 @@ public:
 	bool operator!=(const Group& other);
 	Group& operator=(const Group& other);
 	friend ostream& operator<<(ostream& output, const Group& src);
-
-	/*
-	Time& operator() (int h, int m, int s);
-	friend istream& operator>>(istream& input, Time& src);
-	*/
+	friend istream& operator>>(istream& input, Group& src);
+	Group& operator() (const char* name);
+	operator Student* ();
 
 	/*SET-GET*/	
 	void SetGroupSize(unsigned int group_size);
@@ -127,11 +135,11 @@ public:
 + «<» 
 + «==» 
 + «!=»
-- «>>»
++ «>>»
 + «<<»
-- «( )»
++ «( )»
 + «=»
-- «[ ]» (возврат студента по индексу)
-- предусмотреть конструктор преобразования из типа Student*
-- перегрузить операцию преобразования типа из Group в Student*.
++ «[ ]» (возврат студента по индексу)
++ предусмотреть конструктор преобразования из типа Student*
++ перегрузить операцию преобразования типа из Group в Student*.
 */

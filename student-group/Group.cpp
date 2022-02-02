@@ -346,26 +346,29 @@ ostream& operator<<(ostream& output, const Group& src)
 	src.ShowGroup();
 	return output;
 }
-
-/*
-Time& Time::operator() (int h, int m, int s)
+istream& operator>>(istream& input, Group& src)
 {
-	SetHours(h);
-	SetMinutes(m);
-	SetSeconds(s);
-	return *this;
-}
-istream& operator>>(istream& input, Time& src)
-{
-	int hh, mm, ss;
-	input >> hh >> mm >> ss;
+	char* name = new char[50];
+	input >> name;
 
-	src.SetHours(hh);
-	src.SetMinutes(mm);
-	src.SetSeconds(ss);
+	src.SetGroupName(name);
+
+	delete[] name;
+	name = nullptr;
 
 	return input;
-}*/
+}
+
+Group& Group::operator() (const char* name)
+{
+	SetGroupName(name);
+	return *this;
+}
+
+Group::operator Student* ()
+{
+	return group;
+}
 
 /*Сеттеры*/
 void Group::SetGroupSize(unsigned int group_size)

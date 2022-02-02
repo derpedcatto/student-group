@@ -90,7 +90,11 @@ public:
 	bool operator<(Student& other);
 	bool operator==(Student& other);
 	bool operator!=(Student& other);
+	Student& operator() (const char* name, const char* lastname, const char* middlename);
 	Student& operator+=(int mark);
+	Student& operator=(Student& other);
+	friend ostream& operator<<(ostream& output, const Student& src);
+	friend istream& operator>>(istream& input, Student& src);
 
 	/*Сеттеры*/
 	void SetFullName(const char* name, const char* lastname, const char* middlename);
@@ -151,8 +155,8 @@ public:
 + «<»
 + «==»
 + «!=»
-- «>>»
-- «<<»
-- «( )»
-- «=»
++ «>>»
++ «<<»
++ «( )»
++ «=»
 */

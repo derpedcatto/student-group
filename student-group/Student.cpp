@@ -123,6 +123,11 @@ bool Student::operator!=(Student& other)
 {
 	return !(*this == other);
 }
+Student& Student::operator() (const char* name, const char* lastname, const char* middlename)
+{
+	SetFullName(name, lastname, middlename);
+	return *this;
+}
 Student& Student::operator+=(int mark)
 {
 	pass_size++;
@@ -138,6 +143,30 @@ Student& Student::operator+=(int mark)
 	pass = newpass;
 
 	return *this;
+}
+Student& Student::operator=(Student& other)
+{
+	CopyStudentDataFrom(other);
+	return *this;
+}
+ostream& operator<<(ostream& output, const Student& src)
+{
+	src.ShowStudent();
+	return output;
+}
+istream& operator>>(istream& input, Student& src)
+{
+	char* name = new char[50];
+	char* lastname = new char[50];
+	char* middlename = new char[50];
+	input >> name >> lastname >> middlename;
+
+	src.SetFullName(name, lastname, middlename);
+
+	delete[] name;
+	delete[] lastname;
+	delete[] middlename;
+	return input;
 }
 
 /*Сеттеры*/
