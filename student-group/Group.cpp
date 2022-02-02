@@ -1,6 +1,4 @@
 #include "Group.h"
-#include <iostream>
-using namespace std;
 
 void Group::ShowGroup() const
 {
